@@ -6,8 +6,7 @@ package dollar;
  * @author jongUn
  * @since 2016. 08. 03.
  */
-public class Dollar {
-	public int amount;
+public class Dollar extends Money{
 
 	public Dollar(int amount) {
 		this.amount = amount;
@@ -16,4 +15,6 @@ public class Dollar {
 	public Dollar times(int multiplier) {
 		return new Dollar(amount * multiplier);
 	}
+
+
 }
