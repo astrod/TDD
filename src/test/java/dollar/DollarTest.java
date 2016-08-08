@@ -15,24 +15,35 @@ import static junit.framework.Assert.assertEquals;
 public class DollarTest {
 	@Test
 	public void testMultiplication() {
-		Dollar five = new Dollar(5);
-		assertEquals(new Dollar(10), five.times(2));
-		assertEquals(new Dollar(15), five.times(3));
+		Money five = Money.dollar(5);
+		assertEquals(Money.dollar(10), five.times(2));
+		assertEquals(Money.dollar(15), five.times(3));
 	}
 
 	@Test
 	public void testFrancMultiplication() {
-		Franc five = new Franc(5);
-		assertEquals(new Franc(10), five.times(2));
-		assertEquals(new Franc(15), five.times(3));
+		Money five = Money.franc(5);
+		assertEquals(Franc.franc(10), five.times(2));
+		assertEquals(Franc.franc(15), five.times(3));
 	}
 
 	@Test
 	public void testEquality() {
-		Assert.assertTrue(new Dollar(5).equals(new Dollar(5)));
-		Assert.assertFalse(new Dollar(5).equals(new Dollar(6)));
-		Assert.assertTrue(new Franc(5).equals(new Franc(5)));
-		Assert.assertFalse(new Franc(6).equals(new Franc(5)));
-		Assert.assertFalse(new Franc(5).equals(new Dollar(5)));
+		Assert.assertTrue(Money.dollar(5).equals(Money.dollar(5)));
+		Assert.assertFalse(Money.dollar(5).equals(Money.dollar(6)));
+		Assert.assertTrue(Franc.franc(5).equals(Franc.franc(5)));
+		Assert.assertFalse(Franc.franc(6).equals(Franc.franc(5)));
+		Assert.assertFalse(Franc.franc(5).equals(Money.dollar(5)));
+	}
+
+	@Test
+	public void testCurrency() {
+		Assert.assertEquals("USD", Money.dollar(1).currency());
+		Assert.assertEquals("CHF", Money.franc(1).currency());
+	}
+
+	@Test
+	public void testDifferentClassEquality() {
+		Assert.assertTrue(new Money(10, "CHF").equals(new Franc(10, "CHF")));
 	}
 }
