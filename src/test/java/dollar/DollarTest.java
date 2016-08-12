@@ -12,6 +12,9 @@ import static junit.framework.Assert.assertEquals;
  * @since 2016. 08. 03.
  */
 
+/* 어떤 클라이언트 코드도 Dollar라는 이름의 하위클래스가 있다는 사실을 알지 못한다
+	그렇기 때문에 클라이언트 코드(테스트 코드)와 별개로 상위의 코드를 마음대로 수정할 수 있다.
+ */
 public class DollarTest {
 	@Test
 	public void testMultiplication() {
@@ -20,6 +23,7 @@ public class DollarTest {
 		assertEquals(Money.dollar(15), five.times(3));
 	}
 
+	// TODO : 삭제해야 하는가?
 	@Test
 	public void testFrancMultiplication() {
 		Money five = Money.franc(5);
@@ -30,9 +34,7 @@ public class DollarTest {
 	@Test
 	public void testEquality() {
 		Assert.assertTrue(Money.dollar(5).equals(Money.dollar(5)));
-		Assert.assertFalse(Money.dollar(5).equals(Money.dollar(6)));
-		Assert.assertTrue(Franc.franc(5).equals(Franc.franc(5)));
-		Assert.assertFalse(Franc.franc(6).equals(Franc.franc(5)));
+		Assert.assertFalse(Money.dollar(5).equals(Money.dollar(6)));;
 		Assert.assertFalse(Franc.franc(5).equals(Money.dollar(5)));
 	}
 
@@ -43,7 +45,19 @@ public class DollarTest {
 	}
 
 	@Test
-	public void testDifferentClassEquality() {
-		Assert.assertTrue(new Money(10, "CHF").equals(new Franc(10, "CHF")));
+	public void testSimpleAddition() {
+		Expression sum = new Sum(Money.dollar(3), Money.dollar(4));
+		Bank bank = new Bank();
+		Money reduced = bank.reduce(sum, "USD");
+		assertEquals(Money.dollar(7), reduced);
 	}
+
+	@Test
+	public void testReduceMoney() {
+		Bank bank = new Bank();
+		Money result = bank.reduce(Money.dollar(1), "USD");
+		assertEquals(Money.dollar(1), result);
+	}
+
+
 }
