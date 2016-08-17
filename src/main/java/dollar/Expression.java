@@ -7,5 +7,5 @@ package dollar;
  * @since 2016. 08. 12.
  */
 public interface Expression {
-	Money reduce(String to);
+	Money reduce(Bank bank, String to);
 }
